@@ -1,18 +1,26 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
-
+import React from 'react';
+import TaskList from './list/list-component.jsx';
+import TaskCollection from './list/tasks-collection';
 import HelloView from './views/hello';
 
 
 export default Backbone.Router.extend({
 
   routes: {
-    '': 'dashboard',
+    '': 'list',
     'about': 'about'
   },
 
   initialize: () => {
     $('body').append('<div id="js-app"></div>');
+  },
+
+  list() {
+    let taskCollection = new TaskCollection();
+    taskCollection.fetch();
+    React.render(<TaskList collection={taskCollection}/>, document.getElementById('content'));
   },
 
   dashboard: () => {

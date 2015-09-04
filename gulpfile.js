@@ -42,12 +42,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('styles',function(cb) {
-  return gulp.src(src + 'stylus/main.styl')
-    .pipe($.stylus({
-      compress: isProduction,
-      'include css' : true
-    }))
-    .pipe($.autoprefixer({browsers: autoprefixerBrowsers}))
+  return gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css')
     .pipe(gulp.dest(dist + 'css/'))
     .pipe($.size({ title : 'css' }))
     .pipe($.connect.reload());
@@ -73,7 +68,7 @@ gulp.task('static', function(cb) {
 gulp.task('watch', function() {
   gulp.watch(src + 'stylus/*.styl', ['styles']);
   gulp.watch(src + 'index.html', ['html']);
-  gulp.watch(src + 'app/**/*.js', ['scripts']);
+  gulp.watch(src + '/**/*.js?(x)', ['scripts']);
 });
 
 gulp.task('clean', function(cb) {
