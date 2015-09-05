@@ -8,17 +8,26 @@ module.exports = function(config) {
   frameworks: ['mocha'],
 
   files: [
-    'tests/index.js'
+    'src/**/*_test.js?(x)'
   ],
 
   preprocessors: {
-    'tests/*': ['webpack']
+    'src/**/*_test.js?(x)': ['webpack', 'sourcemap']
   },
 
   webpack: {
+    debug : true,
+    devtool : 'inline-source-map',
+    resolve: {
+      extensions: [
+        '',
+        '.js',
+        '.jsx'
+      ]
+    },
     module: {
       loaders : [
-          { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' }
+        { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader', sourceMaps: 'inline' }
       ]
     }
   },
@@ -30,13 +39,13 @@ module.exports = function(config) {
     quiet: true
   },
 
-  reporters: ['progress'],
+  reporters: ['dots'],
 
   port: 9876,
 
   colors: true,
 
-  logLevel: config.LOG_DISABLE,
+  logLevel: config.ERROR,
 
   autoWatch: true,
 
@@ -44,13 +53,6 @@ module.exports = function(config) {
 
   captureTimeout: 60000,
 
-  singleRun: false,
-
-  plugins: [
-    require('karma-webpack'),
-    require('karma-mocha'),
-    require('karma-spec-reporter'),
-    require('karma-chrome-launcher')
-  ]
+  singleRun: false
   });
 };
